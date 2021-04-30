@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    親愛度（１０以上）と消費ボルテージ数（１０まで）を入力。<br>
+    難易度14はAP前提、難易度が1上がると1%の確率でGREAT以下が出ると設定<br>
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <input type='submit' value="計算する" class="save btn btn-default">
+        </div>
+    </form>
+    {% for p in property %}
+        {{ p.name }}
+        {{ p.level }}
+        {{ p.notes }}
+        {{ p.getpoint }}
+        {{ p.Remarks }}
+        <br>
+    {% endfor %}
+{% endblock %}
