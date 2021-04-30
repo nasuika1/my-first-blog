@@ -58,6 +58,7 @@ def CountGreat(pl,wp,vo):
 def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increase_rate = 1):
     music_list,max_point = Concider_accuracy(music_list,accuracy,Criteria,increase_rate)
     point_list = Level_Divide(music_list,max_point)
+    print(music_list)
     efficient_music = SearchEfficient(point_list)
     if(want_point < 10):
         print("欲しい親愛度は10以上")
@@ -75,10 +76,11 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
         play_list_2 += [efficient+[great_num]]
 
     #１曲の時
+    v = 1
     for i in range(5):
         if(want_point%(i+1) == 0 and want_point/(i+1) <= max_point):
             break
-    v = i+1
+            v = i+1
     if(want_point <= max_point*v):
         w_point = int(want_point//v)
         pl_10 = point_list[w_point-10]
@@ -112,14 +114,22 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
             break
     Candicate_list = []
     Candicate_list_2 = []
+    if(voltage < 2):
+        voltage = 2
     for i,j in itertools.product(range(len(sorted_list)),range(len(sorted_list))):
         for v_i,v_j in itertools.product(range(5),range(5)):
+            v_i += 1
+            v_j += 1
             if(v_i + v_j > voltage):
                 continue
             get_point = sorted_list[i][3] * v_i + sorted_list[j][3] * v_j
             get_point_2 = (sorted_list[i][3]-1) * v_i + sorted_list[j][3] * v_j
             get_point_3 = sorted_list[i][3] * v_i + (sorted_list[j][3]-1) * v_j
             get_point_4 = (sorted_list[i][3]-1) * v_i + (sorted_list[j][3]-1) * v_j
+            if(v_i == 1):
+                v_i = 0
+            if(v_j == 1):
+                v_j = 0
             if(want_point == get_point):
                 Candicate_list += [[sorted_list[i],sorted_list[j],sorted_list[i][0]+sorted_list[j][0],sorted_list[i][3],sorted_list[j][3],v_i,v_j]]
                 Candicate_list_2 += [[sorted_list[i],sorted_list[j],sorted_list[i][0]+sorted_list[j][0],sorted_list[i][3],sorted_list[j][3],v_i,v_j]]
@@ -165,12 +175,7 @@ class Music:
         p1,p2 = Calc_Dear(self.music_info,self.dear_point,self.voltage,accuracy= self.accuracy,Criteria = self.criteria,increase_rate = self.increase_rate)
 
         self.play_list = p1
-        self.play_list = p2
-        for i in range(len(p1)):
-            print(p1[i])
-        print()
-        for j in range(len(p2)):
-            print(p2[j])
+        self.play_list_2 = p2
     
     def open_data(self):
         with open(BASE_DIR+'/blog/D4DJ/データ/d4dj_music.csv') as f:
