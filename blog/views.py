@@ -1,14 +1,10 @@
 from django.utils import timezone
 from .models import Post
-<<<<<<< HEAD
 from .forms import PostForm
 from django.shortcuts import render, get_object_or_404, redirect
-
-=======
 from .forms import PostForm, UserForm
 from django.shortcuts import render, get_object_or_404, redirect
 from .D4DJ import DearPointCalc
->>>>>>> 親愛度計算を追加
 # Create your views here.
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -43,9 +39,7 @@ def post_edit(request, pk):
             return redirect('post_detail',pk=post.pk)
     else:
         form = PostForm(instance=post)
-<<<<<<< HEAD
     return render(request, 'blog/post_edit.html',{'form': form})
-=======
     return render(request, 'blog/post_edit.html',{'form': form})
 
 def dearpoint(request):
@@ -79,4 +73,3 @@ class MusicProperty:
         self.notes = notes
         self.getpoint = getpoint
         self.Remarks = Remarks
->>>>>>> 親愛度計算を追加
