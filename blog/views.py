@@ -43,13 +43,16 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html',{'form': form})
 
 def dearpoint(request):
-    params = {'sinaido': '', 'voltage': '', 'form': None, 'property': ''}
+    params = {'sinaido': '', 'voltage': '', 'accuracy':'1', 'criteria': '', 'increase_rate': '','form': None, 'property': ''}
     if request.method == "POST":
         form = UserForm(request.POST)
         params['sinaido'] = request.POST['sinaido']
         params['voltage'] = request.POST['voltage']
+        params['accuracy'] = request.POST['accuracy']
+        params['criteria'] = request.POST['criteria']
+        params['increase_rate'] = request.POST['increase_rate']
         params['form'] = form
-        m_info = DearPointCalc.Music(int(params['sinaido']),int(params['voltage']))
+        m_info = DearPointCalc.Music(int(params['sinaido']),int(params['voltage']),accuracy = float(params['accuracy']),criteria = float(params['criteria']),increase_rate = float(params['increase_rate']))
         try:
             m_info.Main()
             pl = m_info.play_list
@@ -60,7 +63,8 @@ def dearpoint(request):
         except:
             params['property'] = [MusicProperty('','','','','計算エラー')]
     else:
-        params['form'] = UserForm()
+        initial_dict = dict(accuracy = '1', criteria = '14', increase_rate= '1')
+        params['form'] = UserForm(initial = initial_dict)
     return render(request,'blog/dearpoint.html',params)
 
 def home(request):
