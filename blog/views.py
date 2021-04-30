@@ -50,15 +50,15 @@ def dearpoint(request):
         params['voltage'] = request.POST['voltage']
         params['form'] = form
         m_info = DearPointCalc.Music(int(params['sinaido']),int(params['voltage']))
-#        try:
-        m_info.Main()
-        pl = m_info.play_list
-        property_list = []
-        for i in range(len(pl)):
-            property_list += [MusicProperty(pl[i][1],pl[i][2],pl[i][4],pl[i][3],pl[i][5])]
-        params['property'] = property_list
-#        except:
-#            params['property'] = [MusicProperty('','','','','計算エラー')]
+        try:
+            m_info.Main()
+            pl = m_info.play_list
+            property_list = []
+            for i in range(len(pl)):
+                property_list += [MusicProperty(pl[i][1],pl[i][2],pl[i][4],pl[i][3],pl[i][5])]
+            params['property'] = property_list
+        except:
+            params['property'] = [MusicProperty('','','','','計算エラー')]
     else:
         params['form'] = UserForm()
     return render(request,'blog/dearpoint.html',params)

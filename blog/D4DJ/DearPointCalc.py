@@ -80,18 +80,15 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
         if(want_point%(voltage-i) == 0 and want_point/(voltage-i) <= max_point):
             v = voltage-i
             break
-    print(want_point)
     if(want_point <= max_point*v):
         w_point = int(want_point//v)
         pl_10 = point_list[w_point-10]
         pl_9 = point_list[w_point-9]
-        print(pl_10)
         if(len(pl_10) <= 2):
             play_list += [pl_10]
         else:
             great_num = CountGreat(pl_10,w_point,v)
             play_list += [pl_10+[great_num]]
-        print(play_list)
         if(len(point_list) >= w_point-10):
             if(pl_10[0] > pl_9[0]):
                 great_num = CountGreat(pl_9,w_point,v)
@@ -126,9 +123,7 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
         voltage = 2
     for i,j in itertools.product(range(len(sorted_list)),range(len(sorted_list))):
         for v_i,v_j in itertools.product(range(6),range(6)):
-            print(v_i,v_j)
             if(v_i + v_j > voltage):
-                print(v_i,v_j)
                 continue
             if(v_i == 0):
                 v_i = 1
@@ -188,8 +183,6 @@ class Music:
 
         self.play_list = p1
         self.play_list_2 = p2
-        print(self.play_list)
-        print(self.play_list_2)
     
     def open_data(self):
         with open(BASE_DIR+'/blog/D4DJ/データ/d4dj_music.csv') as f:
