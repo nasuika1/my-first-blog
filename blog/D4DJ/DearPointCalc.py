@@ -65,7 +65,7 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
     if(voltage < 1):
         voltage = 1
     efficient = point_list[efficient_music]
-    Threshold = (voltage + 1) * max_point
+    Threshold = int((voltage + 0.5) * max_point)
     play_list = []
     play_list_2 = []
     while want_point > Threshold:
@@ -80,19 +80,28 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
         if(want_point%(voltage-i) == 0 and want_point/(voltage-i) <= max_point):
             v = voltage-i
             break
+    print(want_point)
     if(want_point <= max_point*v):
         w_point = int(want_point//v)
         pl_10 = point_list[w_point-10]
         pl_9 = point_list[w_point-9]
-        great_num = CountGreat(pl_10,w_point,v)
-        play_list += [pl_10+[great_num]]
+        print(pl_10)
+        if(len(pl_10) <= 2):
+            play_list += [pl_10]
+        else:
+            great_num = CountGreat(pl_10,w_point,v)
+            play_list += [pl_10+[great_num]]
+        print(play_list)
         if(len(point_list) >= w_point-10):
             if(pl_10[0] > pl_9[0]):
                 great_num = CountGreat(pl_9,w_point,v)
                 play_list_2 += [pl_9+[great_num]]
             else:
-                great_num = CountGreat(pl_10,w_point,v)
-                play_list_2 += [pl_10+[great_num]]
+                if(len(pl_10) <= 2):
+                    play_list_2 += [pl_10]
+                else:
+                    great_num = CountGreat(pl_10,w_point,v)
+                    play_list_2 += [pl_10+[great_num]]
         if(len(play_list[-1]) <= 1):
             if(len(play_list_2[-1]) <= 1):
                 del play_list[-1]
@@ -116,11 +125,15 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
     if(voltage < 2):
         voltage = 2
     for i,j in itertools.product(range(len(sorted_list)),range(len(sorted_list))):
-        for v_i,v_j in itertools.product(range(5),range(5)):
-            v_i += 1
-            v_j += 1
+        for v_i,v_j in itertools.product(range(6),range(6)):
+            print(v_i,v_j)
             if(v_i + v_j > voltage):
+                print(v_i,v_j)
                 continue
+            if(v_i == 0):
+                v_i = 1
+            if(v_j == 0):
+                v_j = 1
             get_point = sorted_list[i][3] * v_i + sorted_list[j][3] * v_j
             get_point_2 = (sorted_list[i][3]-1) * v_i + sorted_list[j][3] * v_j
             get_point_3 = sorted_list[i][3] * v_i + (sorted_list[j][3]-1) * v_j
@@ -175,6 +188,8 @@ class Music:
 
         self.play_list = p1
         self.play_list_2 = p2
+        print(self.play_list)
+        print(self.play_list_2)
     
     def open_data(self):
         with open(BASE_DIR+'/blog/D4DJ/データ/d4dj_music.csv') as f:
