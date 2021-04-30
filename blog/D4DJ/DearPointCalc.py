@@ -58,7 +58,6 @@ def CountGreat(pl,wp,vo):
 def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increase_rate = 1):
     music_list,max_point = Concider_accuracy(music_list,accuracy,Criteria,increase_rate)
     point_list = Level_Divide(music_list,max_point)
-    print(music_list)
     efficient_music = SearchEfficient(point_list)
     if(want_point < 10):
         print("欲しい親愛度は10以上")
@@ -77,10 +76,10 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
 
     #１曲の時
     v = 1
-    for i in range(5):
-        if(want_point%(i+1) == 0 and want_point/(i+1) <= max_point):
+    for i in range(voltage-1):
+        if(want_point%(voltage-i) == 0 and want_point/(voltage-i) <= max_point):
+            v = voltage-i
             break
-            v = i+1
     if(want_point <= max_point*v):
         w_point = int(want_point//v)
         pl_10 = point_list[w_point-10]
