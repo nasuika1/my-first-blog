@@ -58,12 +58,12 @@ def dearpoint(request):
             pl = m_info.play_list
             property_list = []
             for i in range(len(pl)):
-                property_list += [MusicProperty(pl[i][1],pl[i][2],pl[i][4],pl[i][3],pl[i][5])]
+                property_list += [MusicProperty(pl[i][1],pl[i][2],pl[i][4],pl[i][3],pl[i][5],pl[i][0])]
             params['property'] = property_list
         except:
-            params['property'] = [MusicProperty('','','','','計算エラー')]
+            params['property'] = [MusicProperty('','','','','計算エラー','')]
     else:
-        initial_dict = dict(accuracy = '1', criteria = '14', increase_rate= '1')
+        initial_dict = dict(accuracy = '0', criteria = '14', increase_rate= '1')
         params['form'] = UserForm(initial = initial_dict)
     return render(request,'blog/dearpoint.html',params)
 
@@ -71,9 +71,10 @@ def home(request):
     return render(request,'blog/home.html')
 
 class MusicProperty:
-    def __init__(self,name,level,notes,getpoint,Remarks):
+    def __init__(self,name,level,notes,getpoint,Remarks,time):
         self.name = name
         self.level = level
         self.notes = notes
         self.getpoint = getpoint
         self.Remarks = Remarks
+        self.time = time
