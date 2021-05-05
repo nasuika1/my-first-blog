@@ -12,23 +12,31 @@
         </div>
     </form>
     <br><br>
-    <table border = "3">
+    <table border = "3" width = "800" align = "right">
         <tr>
-            <th>曲名</th>
-            <th>難易度</th>
-            <th>ノーツ数</th>
-            <th>得る親愛度</th>
-            <th>時間</th>
-            <th>備考</th>
+            <th width = "40%" align = "left">曲名</th>
+            <th width = "10%">難易度</th>
+            <th width = "10%">ノーツ数</th>
+            <th width = "5%">得る親愛度</th>
+            <th width = "10%">時間</th>
+            <th width = "25%" align = "left">備考</th>
         </tr>
         {% for p in property %}
-            <tr>
-                <td>{{ p.name }}</td>
-                <td>{{ p.level }}</td>
+            <tr align = "right">
+                <td align = "left">{{ p.name }}</td>
+                {% if p.level == "Expert" %}
+                    <td bgcolor = 'red'>{{ p.level }}</td>
+                {% elif p.level == "Hard" %}
+                    <td bgcolor = "yellow">{{ p.level }}</td>
+                {% elif p.level == "Normal" %}
+                    <td bgcolor = "lime">{{ p.level }}</td>
+                {% else %}
+                    <td bgcolor = "dodgerblue">{{ p.level }}</td>
+                {% endif %}
                 <td>{{ p.notes }}</td>
                 <td>{{ p.getpoint }}</td>
                 <td>{{ p.time }}</td>
-                <td>{{ p.Remarks }}</td>
+                <td align = "left">{{ p.Remarks }}</td>
             </tr>
         {% endfor %}
     </table>

@@ -70,6 +70,18 @@ def dearpoint(request):
 def home(request):
     return render(request,'blog/home.html')
 
+def music_list(request):
+    m_info = DearPointCalc.Music(10,10)
+    minfo = m_info.music_info
+    property_list = []
+    for i in range(len(minfo)):
+        property_list += [MProperty(minfo[i][1],"Easy",minfo[i][5],minfo[i][4],minfo[i][9])]
+        property_list += [MProperty(minfo[i][1],"Normal",minfo[i][6],minfo[i][4],minfo[i][10])]
+        property_list += [MProperty(minfo[i][1],"Hard",minfo[i][7],minfo[i][4],minfo[i][11])]
+        property_list += [MProperty(minfo[i][1],"Expert",minfo[i][8],minfo[i][4],minfo[i][12])]
+
+    return render(request,'blog/music_list.html',{'property_list':property_list})
+
 class MusicProperty:
     def __init__(self,name,level,notes,getpoint,Remarks,time):
         self.name = name
@@ -78,3 +90,11 @@ class MusicProperty:
         self.getpoint = getpoint
         self.Remarks = Remarks
         self.time = time
+
+class MProperty:
+    def __init__(self,name,level,levelnum, time, note):
+        self.name = name
+        self.level = level
+        self.levelnum = levelnum
+        self.time = time
+        self.note = note

@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h2>曲一覧</h2>
+    <table border = "3" width = "800">
+        <tr>
+            <th width = 50%>曲名</th>
+            <th width = "10%" align = "right">難易度</th>
+            <th width = "10%" align = "right">レベル</th>
+            <th width = "10%" align = "right">時間</th>
+            <th width = "10%" align = "right">ノーツ数</th>
+        </tr>
+        {% for p in property_list %}
+            <tr align = "right">
+                <td align = "left">{{ p.name }}</td>
+                {% if p.level == "Expert" %}
+                    <td bgcolor = 'red'>{{ p.level }}</td>
+                {% elif p.level == "Hard" %}
+                    <td bgcolor = "yellow">{{ p.level }}</td>
+                {% elif p.level == "Normal" %}
+                    <td bgcolor = "lime">{{ p.level }}</td>
+                {% else %}
+                    <td bgcolor = "dodgerblue">{{ p.level }}</td>
+                {% endif %}
+                <td>{{ p.levelnum }}</td>
+                <td>{{ p.time }}</td>
+                <td>{{ p.note }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
