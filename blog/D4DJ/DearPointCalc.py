@@ -120,7 +120,7 @@ def Calc_Dear(music_list,want_point,voltage,accuracy = 0,Criteria = 14.0,increas
     Candicate_list = []
     Candicate_list_2 = []
     if(voltage < 2):
-        voltage = 2
+        voltage = 1
     for i,j in itertools.product(range(len(sorted_list)),range(len(sorted_list))):
         for v_i,v_j in itertools.product(range(6),range(6)):
             if(v_i + v_j > voltage):
